@@ -1,0 +1,15 @@
+<div class="sd-container">
+    <div *ngIf="cartItems.length>0; else loading">
+        <div class="cartItem mt-4" *ngFor="let item of cartItems">
+            <img class="productImg" [src]="item.image" [alt]="item.title">
+            <h3>{{item.title | slice:0:10}}</h3>
+            <p>₹ {{item.price}}</p>
+            <p>{{item.quantity}}</p>
+        </div>
+    </div>
+</div>
+
+
+<ng-template #loading>
+    <mat-spinner class="mx-auto my-5" diameter="100"></mat-spinner>
+</ng-template>

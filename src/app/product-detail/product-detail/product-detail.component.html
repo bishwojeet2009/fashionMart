@@ -1,0 +1,14 @@
+<div class="sd-container">
+    <div class="card" *ngIf="productDetail.id; else loading">
+        <img class="card-img-top" [src]="productDetail.image" alt="Card image cap">
+        <div class="card-body">
+            <h2 class="card-title">{{productDetail.title}}</h2>
+            <h3 class="card-text">{{productDetail.category}}</h3>
+            <p class="card-text">{{productDetail.description}}</p>
+            <h3 class="card-text">₹ {{productDetail.price}}</h3>
+        </div>
+    </div>
+    <ng-template #loading>
+        <mat-spinner class="mx-auto my-5" diameter="100"></mat-spinner>
+    </ng-template>
+</div>

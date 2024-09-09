@@ -1,0 +1,50 @@
+.mainSection {
+    background-color: #c0cbf4;
+}
+
+.logo {
+    width: 60px;
+    height: 60px;
+}
+
+.mainContent {
+    height: calc(100vh - 92px);
+}
+
+.sideNav {
+    width: 200px;
+    background-color: #c0cbf4;
+}
+
+.toggleBtn {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    box-shadow: -10px -7px 7px #b2bce1, 10px 10px 15px rgba(216, 218, 225, 0.7);
+    border-radius: .25rem;
+    width: 56px;
+    height: 40px;
+
+    &:hover {
+        box-shadow: -10px -7px 7px #b2bce1, 10px 10px 15px rgba(216, 218, 225, 0.7);
+    }
+
+    .toggleImg {
+        width: 30px;
+        height: 15px;
+    }
+}
+
+.navList {
+    list-style-type: none;
+    padding: 0px 16px 16px 16px;
+}
+
+.sd-navItem {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+
+}
+
+.userName {
+    text-transform: capitalize;
+}

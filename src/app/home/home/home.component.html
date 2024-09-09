@@ -1,0 +1,75 @@
+<div class="sd-container">
+
+    <div class="input-group pt-3">
+        <input type="text" class="form-control" placeholder="Search Product" aria-label="Search Product"
+            aria-describedby="basic-addon2">
+        <div class="input-group-append">
+            <button class="btn" type="button">
+                <img src="../../../assets/home-image/Search.svg" alt="Search">
+            </button>
+        </div>
+    </div>
+
+
+    <h1 class="mt-5 mb-3">Category</h1>
+    <div class="carouselItem">
+        <owl-carousel-o [options]="customOptions">
+            <ng-template carouselSlide>
+                <button class="categoryBtn" [ngClass]="{'active': categoryType == ''}" (click)="changeCategory('')">
+                    <img src="../../../assets/home-image/all_product.png" class="categoryImg" alt="Electronic">
+                    <p class="mt-3 mb-0">All</p>
+                </button>
+            </ng-template>
+            <ng-template carouselSlide>
+                <button class="categoryBtn" [ngClass]="{'active': categoryType == 'category/electronics'}"
+                    (click)="changeCategory('category/electronics')">
+                    <img src="../../../assets/home-image/electronic.png" class="categoryImg" alt="Electronic">
+                    <p class="mt-3 mb-0">Electronics</p>
+                </button>
+            </ng-template>
+            <ng-template carouselSlide>
+                <button class="categoryBtn" [ngClass]="{'active': categoryType == 'category/men\'s clothing'}"
+                    (click)="changeCategory('category/men\'s clothing')">
+                    <img src="../../../assets/home-image/men_wear.png" class="categoryImg" alt="Men wear">
+                    <p class="mt-3 mb-0">Men's</p>
+                </button>
+            </ng-template>
+            <ng-template carouselSlide>
+                <button class="categoryBtn m-1" [ngClass]="{'active': categoryType == 'category/women\'s clothing'}"
+                    (click)="changeCategory('category/women\'s clothing')">
+                    <img src="../../../assets/home-image/women_wear.png" class="categoryImg" alt="Women wear">
+                    <p class="mt-3 mb-0">Women's</p>
+                </button>
+            </ng-template>
+            <ng-template carouselSlide>
+                <button class="categoryBtn" [ngClass]="{'active': categoryType == 'category/jewelery'}"
+                    (click)="changeCategory('category/jewelery')">
+                    <img src="../../../assets/home-image/jewellery.png" class="categoryImg" alt="Jewellery">
+                    <p class="mt-3 mb-0">Jewellery</p>
+                </button>
+            </ng-template>
+        </owl-carousel-o>
+    </div>
+
+
+    <h1 class="mt-5 mb-3">Products</h1>
+    <div class="row" *ngIf="productList.length>0; else loading">
+        <div class="col-lg-4 col-md-6 col-12 my-3" *ngFor="let item of productList">
+            <div class="card p-3">
+                <img class="cardImg" [src]="item.image" alt="Card image cap" [routerLink]="'/product/'+item.id">
+                <h3 class="mt-2">{{item.title | slice:0:20}}</h3>
+                <span class="d-flex justify-content-between align-items-center">
+                    <p class="mb-0">₹ {{item.price}}</p>
+                    <button class="p-0">
+                        <img src="../../../assets/home-image/plus.svg" alt="Add">
+                    </button>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <ng-template #loading>
+        <mat-spinner class="mx-auto my-5" diameter="100"></mat-spinner>
+    </ng-template>
+
+</div>

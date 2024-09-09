@@ -1,0 +1,167 @@
+<div class="sd-container">
+    <div *ngIf="!loginOption; else login">
+        <div *ngIf="!showSuccessMess; else successMess">
+            <h1 class="mt-4">{{updateUser ? 'Update Form':'Registration Form'}}</h1>
+            <form [formGroup]="registrationForm">
+                <div class="row mt-4">
+                    <div class="form-group col-md-6">
+                        <label for="firstName">First Name*</label>
+                        <input type="text" class="form-control" id="firstName"
+                            [ngClass]="{'is-invalid':regForm.firstName.touched && regForm.firstName.errors?.required}"
+                            placeholder="First Name" formControlName="firstName">
+                        <mat-error *ngIf="regForm.firstName.touched && regForm.firstName.errors?.required">
+                            Please fill your first name
+                        </mat-error>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="lastName">Last Name*</label>
+                        <input type="text" class="form-control" id="lastName"
+                            [ngClass]="{'is-invalid':regForm.lastName.touched && regForm.lastName.errors?.required}"
+                            placeholder="Last name" formControlName="lastName">
+                        <mat-error *ngIf="regForm.lastName.touched && regForm.lastName.errors?.required">
+                            Please fill your last name
+                        </mat-error>
+                    </div>
+
+
+                    <div class="form-group col-md-6">
+                        <label for="email">Email*</label>
+                        <input type="text" class="form-control" id="email"
+                            [ngClass]="{'is-invalid':regForm.email.touched && regForm.email.errors?.required}"
+                            placeholder="Email" formControlName="email">
+                        <mat-error *ngIf="regForm.email.touched && regForm.email.errors?.required">
+                            Please fill your email id
+                        </mat-error>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="phone">Phone Number*</label>
+                        <input type="number" class="form-control" id="phone"
+                            [ngClass]="{'is-invalid':regForm.phone.touched && regForm.phone.errors?.required}"
+                            placeholder="Phone Number" formControlName="phone">
+                        <mat-error *ngIf="regForm.phone.touched && regForm.phone.errors?.required">
+                            Please fill your phone number
+                        </mat-error>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="Housenum">House number</label>
+                        <input type="text" class="form-control" id="Housenum" placeholder="House number"
+                            formControlName="number">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="street">Street*</label>
+                        <input type="text" class="form-control" id="street"
+                            [ngClass]="{'is-invalid':regForm.street.touched && regForm.street.errors?.required}"
+                            placeholder="Street" formControlName="street">
+                        <mat-error *ngIf="regForm.street.touched && regForm.street.errors?.required">
+                            Please fill your street
+                        </mat-error>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="city">City*</label>
+                        <input type="text" class="form-control" id="city"
+                            [ngClass]="{'is-invalid':regForm.city.touched && regForm.city.errors?.required}"
+                            placeholder="City" formControlName="city">
+                        <mat-error *ngIf="regForm.city.touched && regForm.city.errors?.required">
+                            Please fill your city
+                        </mat-error>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="zipcode">Pin code*</label>
+                        <input type="text" class="form-control" id="zipcode"
+                            [ngClass]="{'is-invalid':regForm.zipcode.touched && regForm.zipcode.errors?.required}"
+                            placeholder="Pin code" formControlName="zipcode">
+                        <mat-error *ngIf="regForm.zipcode.touched && regForm.zipcode.errors?.required">
+                            Please fill your pin code
+                        </mat-error>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="password">Password*</label>
+                        <input type="password" class="form-control" id="password"
+                            [ngClass]="{'is-invalid':regForm.password.touched && regForm.password.errors?.required}"
+                            placeholder="Password" formControlName="password">
+                        <mat-error *ngIf="regForm.password.touched && regForm.password.errors?.required">
+                            Please fill your password
+                        </mat-error>
+                    </div>
+                </div>
+
+                <button class="ml-auto d-block my-4" type="button" (click)="submitUserForm()">
+                    {{submittingForm? 'Submitting': 'Submit'}}
+                </button>
+            </form>
+            <div *ngIf="!updateUser">
+                <h3>Already have an account ?</h3>
+                <button class="ternary mb-4" (click)="toggleLogin()">Login</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<ng-template #login>
+    <div>
+        <h1 class="mt-4">Login</h1>
+        <form [formGroup]="loginForm">
+            <div class="row mt-4">
+                <div class="form-group col-12">
+                    <label for="email">Email*</label>
+                    <input type="text" class="form-control" id="email"
+                        [ngClass]="{'is-invalid':logForm.email.touched && logForm.email.errors?.required}"
+                        placeholder="Email" formControlName="email">
+                    <mat-error *ngIf="logForm.email.touched && logForm.email.errors?.required">
+                        Please fill your email id
+                    </mat-error>
+                </div>
+                <div class="form-group col-12">
+                    <label for="password">Password*</label>
+                    <input type="password" class="form-control" id="password"
+                        [ngClass]="{'is-invalid':logForm.password.touched && logForm.password.errors?.required}"
+                        placeholder="Password" formControlName="password">
+                    <mat-error *ngIf="logForm.password.touched && logForm.password.errors?.required">
+                        Please fill your password
+                    </mat-error>
+                </div>
+            </div>
+
+            <button class="ml-auto d-block my-4" type="button" (click)="submitLoginForm()">
+                {{submittingForm? 'Submitting': 'Submit'}}
+            </button>
+        </form>
+        <h3>Don't have an account ?</h3>
+        <button class="ternary mb-4" (click)="toggleLogin()">Register Now</button>
+    </div>
+</ng-template>
+
+<ng-template #successMess>
+    <div>
+        <h3 class="mt-3">Registration was successful, but we are using a fake API that does not allow access to
+            modify the database. Please use the below ID and password to log in.
+        </h3>
+        <table class="mb-3">
+            <tr>
+                <th>Id</th>
+                <th>Password</th>
+            </tr>
+            <tr>
+                <td>johnd</td>
+                <td>m38rmF$</td>
+            </tr>
+            <tr>
+                <td>mor_2314</td>
+                <td>83r5^_</td>
+            </tr>
+            <tr>
+                <td>hopkins</td>
+                <td>William56$hj</td>
+            </tr>
+            <tr>
+                <td>donero</td>
+                <td>ewedon</td>
+            </tr>
+        </table>
+        <div class="registrationAlert">
+            <button class="ternary mb-4" (click)="toggleLogin()">Login</button>
+        </div>
+    </div>
+</ng-template>
