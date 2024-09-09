@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { User } from 'src/app/interface/user';
 import { ApiService } from 'src/app/service/api.service';
 import { GlobalService } from 'src/app/service/global.service';
 
@@ -13,18 +14,23 @@ export class DashboardComponent implements OnInit {
   userInfo: any = {}
   loadingUser: Boolean = false;
 
+  user: User | null = null
+
   constructor(public global: GlobalService, private api: ApiService, private router: Router) {
+    this.global.user$.subscribe(res => {
+      this.user = res.user
+    })
+  }
+
+  ngOnInit(): void {
     this.loadingUser = true
-    this.api.getUser(this.global.user.sub).subscribe(res => {
+    this.api.getUser(this.user != null ? this.user.sub : 0).subscribe(res => {
       this.userInfo = res;
       this.loadingUser = false;
     }, (err) => {
       console.warn(err)
       this.loadingUser = false;
     })
-  }
-
-  ngOnInit(): void {
   }
 
   deleteUser() {
