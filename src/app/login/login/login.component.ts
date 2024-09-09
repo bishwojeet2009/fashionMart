@@ -1,27 +1,28 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ApiService } from 'src/app/service/api.service';
 import { map } from 'rxjs/operators';
 import { GlobalService } from 'src/app/service/global.service';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, Subscribable, Subscription } from 'rxjs';
 import { User } from 'src/app/interface/user';
 import { Store } from '@ngrx/store';
-import { addUserAction } from 'src/app/store/user/user.action';
+import { addUserAction, addUserInfoAction } from 'src/app/store/user/user.action';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['../../../sd-scss/globalCss.scss', './login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
 
   submittingForm: Boolean = false;
   loginOption: Boolean = true;
   showSuccessMess = false;
   updateUser = false;
 
-  user = { sub: 0, user: '', iat: 0 }
+  user: User | null = null
+  userSubscription: Subscription | undefined;
 
 
 
@@ -43,9 +44,8 @@ export class LoginComponent implements OnInit {
   })
 
   constructor(private fb: FormBuilder, private api: ApiService, private global: GlobalService, private router: Router, private store: Store<{ user: User }>) {
-
-    this.store.select('user').subscribe(res => {
-      this.user = res
+    this.userSubscription = this.global.user$.subscribe(res => {
+      this.user = res.user
     })
   }
 
@@ -59,10 +59,10 @@ export class LoginComponent implements OnInit {
 
 
   ngOnInit(): void {
-    if (this.user.user) {
+    if (this.user?.sub) {
       this.updateUser = true;
       this.loginOption = false;
-      this.api.getUser(this.global.user.sub).subscribe(res => {
+      this.api.getUser(this.user?.sub).subscribe(res => {
         this.registrationForm.patchValue({
           firstName: res.name.firstname,
           lastName: res.name.lastname,
@@ -98,9 +98,10 @@ export class LoginComponent implements OnInit {
           return this.global.decodeToken(res.token)
         }
         ))
-        .subscribe((res: any) => {
+        .subscribe(res => {
           this.global.user = res
           this.store.dispatch(addUserAction({ user: res }))
+          this.getUserInfo(res.sub)
           this.submittingForm = false;
           this.router.navigate(['/home'])
         },
@@ -112,6 +113,14 @@ export class LoginComponent implements OnInit {
     } else {
       this.submittingForm = false;
     }
+  }
+
+  getUserInfo(id: number) {
+    this.api.getUser(id).subscribe(res => {
+      this.store.dispatch(addUserInfoAction({ userInfo: res }))
+    }, (err) => {
+      console.warn(err)
+    })
   }
 
   submitUserForm() {
@@ -174,5 +183,9 @@ export class LoginComponent implements OnInit {
       this.submittingForm = false;
     }
 
+  }
+
+  ngOnDestroy(): void {
+    this.userSubscription ? this.userSubscription.unsubscribe() : ''
   }
 }

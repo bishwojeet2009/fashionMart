@@ -1,16 +1,25 @@
 import { createReducer, on } from "@ngrx/store";
-import { UserState } from "../../interface/user";
+import { UserInfoState, UserState } from "../../interface/user";
 import { addUserAction, deteleUserAction } from "./user.action";
 
 
-export const initialState: UserState = {
+const userInitialState: UserState = {
     user: null,
+};
+const userInfoInitialState: UserInfoState = {
+    userInfo: null,
 };
 
 // const initialState: User | null = null
 
 export const userReducer = createReducer(
-    initialState,
+    userInitialState,
     on(addUserAction, (state, action) => ({ ...state, ...action })),
     on(deteleUserAction, (state, action) => ({ ...state, user: null }))
 );
+
+export const userInfoReducer = createReducer(
+    userInfoInitialState,
+    on(addUserAction, (state, action) => ({ ...state, ...action })),
+    on(deteleUserAction, (state, action) => ({ ...state, userInfo: null }))
+)

@@ -1,44 +1,50 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { User } from 'src/app/interface/user';
+import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
+import { User, UserInfo } from 'src/app/interface/user';
 import { ApiService } from 'src/app/service/api.service';
 import { GlobalService } from 'src/app/service/global.service';
+import { addUserInfoAction, deteleUserAction, deteleUserInfoAction } from 'src/app/store/user/user.action';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['../../../sd-scss/globalCss.scss', './dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
 
-  userInfo: any = {}
+  userInfo: UserInfo | null = null;
   loadingUser: Boolean = false;
+  userInfoSubscription: Subscription | undefined;
 
-  user: User | null = null
+  // user: User | null = null
 
-  constructor(public global: GlobalService, private api: ApiService, private router: Router) {
-    this.global.user$.subscribe(res => {
-      this.user = res.user
+  constructor(public global: GlobalService, private api: ApiService, private router: Router, private store: Store<{ user: User, userInfo: UserInfo }>) {
+    this.userInfoSubscription = this.global.userInfo$.subscribe(res => {
+      this.userInfo = res.userInfo
     })
   }
 
   ngOnInit(): void {
-    this.loadingUser = true
-    this.api.getUser(this.user != null ? this.user.sub : 0).subscribe(res => {
-      this.userInfo = res;
-      this.loadingUser = false;
-    }, (err) => {
-      console.warn(err)
-      this.loadingUser = false;
-    })
+
   }
 
   deleteUser() {
-    this.api.deleteUser(this.userInfo?.id).subscribe(res => {
-      this.global.user = {};
+    this.api.deleteUser(this.userInfo ? this.userInfo.id : 0).subscribe(res => {
+      this.store.dispatch(deteleUserAction())
+      this.store.dispatch(deteleUserInfoAction())
+      // this.global.user = {};
       this.global.deleteCookie('userToken');
       this.router.navigate(['/home'])
-    })
+    },
+      (err) => {
+        console.warn(err)
+      })
+  }
+
+  ngOnDestroy(): void {
+    this.userInfoSubscription ? this.userInfoSubscription.unsubscribe() : ''
   }
 
 }

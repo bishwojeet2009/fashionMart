@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { CartList } from 'src/app/interface/product';
 import { User } from 'src/app/interface/user';
@@ -10,18 +11,22 @@ import { GlobalService } from 'src/app/service/global.service';
   templateUrl: './cart.component.html',
   styleUrls: ['../../../sd-scss/globalCss.scss', './cart.component.scss']
 })
-export class CartComponent implements OnInit {
+export class CartComponent implements OnInit, OnDestroy {
 
   loadingItem: Boolean = false;
   cartItems: any[] = [];
 
   user: User | null = null;
+  userSubscription: Subscription | null;
 
 
   constructor(private api: ApiService, public global: GlobalService) {
-    this.global.user$.subscribe(res => {
+    this.userSubscription = this.global.user$.subscribe(res => {
       this.user = res.user
-    })
+    },
+      (err) => {
+        console.log(err)
+      })
   }
 
   ngOnInit(): void {
@@ -34,14 +39,12 @@ export class CartComponent implements OnInit {
       }),
         map(res => {
           let product: any = {};
-          console.log(res)
           res.forEach(item => {
             product[item.productId] = (product[item.productId] || 0) + item.quantity
           })
           return product
         }))
       .subscribe(res => {
-        console.log(res)
         for (let item in res) {
           this.api.getProduct(item).subscribe(resp => {
             this.cartItems.push({ ...resp, quantity: res[item] })
@@ -57,6 +60,10 @@ export class CartComponent implements OnInit {
           console.warn(err)
           this.loadingItem = false;
         })
+  }
+
+  ngOnDestroy(): void {
+    this.userSubscription ? this.userSubscription.unsubscribe() : ''
   }
 
 }

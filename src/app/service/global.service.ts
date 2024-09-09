@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { jwtDecode } from 'jwt-decode';
 import { Observable } from 'rxjs';
-import { User, UserState } from '../interface/user';
+import { User, UserInfoState, UserState } from '../interface/user';
 import { Store } from '@ngrx/store';
 
 
@@ -13,10 +13,12 @@ export class GlobalService {
 
   windowWidth = window.innerWidth;
   user$: Observable<UserState>
+  userInfo$: Observable<UserInfoState>
   user: any = {}
 
-  constructor(private cookieService: CookieService, private store: Store<{ user: UserState }>) {
-    this.user$ = this.store.select('user')
+  constructor(private cookieService: CookieService, private store: Store<{ user: UserState, userInfo: UserInfoState }>) {
+    this.user$ = this.store.select('user');
+    this.userInfo$ = this.store.select('userInfo')
     window.onresize = (e) => {
       this.windowWidth = window.innerWidth;
     };
