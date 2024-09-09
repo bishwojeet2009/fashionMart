@@ -4,6 +4,10 @@ import { ApiService } from 'src/app/service/api.service';
 import { map } from 'rxjs/operators';
 import { GlobalService } from 'src/app/service/global.service';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { User } from 'src/app/interface/user';
+import { Store } from '@ngrx/store';
+import { addUserAction } from 'src/app/store/user/user.action';
 
 @Component({
   selector: 'app-login',
@@ -16,6 +20,10 @@ export class LoginComponent implements OnInit {
   loginOption: Boolean = true;
   showSuccessMess = false;
   updateUser = false;
+
+  user = { sub: 0, user: '', iat: 0 }
+
+
 
   registrationForm = this.fb.group({
     firstName: new FormControl('', Validators.required),
@@ -34,7 +42,12 @@ export class LoginComponent implements OnInit {
     password: new FormControl('', Validators.required)
   })
 
-  constructor(private fb: FormBuilder, private api: ApiService, private global: GlobalService, private router: Router) { }
+  constructor(private fb: FormBuilder, private api: ApiService, private global: GlobalService, private router: Router, private store: Store<{ user: User }>) {
+
+    this.store.select('user').subscribe(res => {
+      this.user = res
+    })
+  }
 
   get regForm() {
     return this.registrationForm.controls
@@ -46,7 +59,7 @@ export class LoginComponent implements OnInit {
 
 
   ngOnInit(): void {
-    if (this.global.user.user) {
+    if (this.user.user) {
       this.updateUser = true;
       this.loginOption = false;
       this.api.getUser(this.global.user.sub).subscribe(res => {
@@ -85,8 +98,9 @@ export class LoginComponent implements OnInit {
           return this.global.decodeToken(res.token)
         }
         ))
-        .subscribe(res => {
+        .subscribe((res: any) => {
           this.global.user = res
+          this.store.dispatch(addUserAction({ user: res }))
           this.submittingForm = false;
           this.router.navigate(['/home'])
         },
@@ -161,5 +175,4 @@ export class LoginComponent implements OnInit {
     }
 
   }
-
 }

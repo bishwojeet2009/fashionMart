@@ -9,6 +9,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthInterceptor } from './auth.interceptor';
+import { StoreModule } from '@ngrx/store';
+import { userReducer } from './store/user/user.reducer';
+
 
 @NgModule({
   declarations: [
@@ -22,6 +25,9 @@ import { AuthInterceptor } from './auth.interceptor';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    StoreModule.forRoot({
+      user: userReducer
+    })
   ],
   providers: [
     CookieService,

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { CartList } from 'src/app/interface/product';
+import { User } from 'src/app/interface/user';
 import { ApiService } from 'src/app/service/api.service';
 import { GlobalService } from 'src/app/service/global.service';
 
@@ -12,12 +13,20 @@ import { GlobalService } from 'src/app/service/global.service';
 export class CartComponent implements OnInit {
 
   loadingItem: Boolean = false;
-  cartItems: any[] = []
+  cartItems: any[] = [];
+
+  user: User | null = null;
 
 
   constructor(private api: ApiService, public global: GlobalService) {
+    this.global.user$.subscribe(res => {
+      this.user = res.user
+    })
+  }
+
+  ngOnInit(): void {
     this.loadingItem = true
-    this.api.getCartItem(this.global.user.sub)
+    this.api.getCartItem(this.user != null ? this.user.sub : 0)
       .pipe(map(res => {
         let product: any[] = []
         res.map(item => product.push(...item.products))
@@ -48,10 +57,6 @@ export class CartComponent implements OnInit {
           console.warn(err)
           this.loadingItem = false;
         })
-  }
-
-  ngOnInit(): void {
-    console.log("Usr", this.global.user)
   }
 
 }

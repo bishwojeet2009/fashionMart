@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { jwtDecode } from 'jwt-decode';
+import { Observable } from 'rxjs';
+import { User, UserState } from '../interface/user';
+import { Store } from '@ngrx/store';
 
 
 @Injectable({
@@ -9,9 +12,11 @@ import { jwtDecode } from 'jwt-decode';
 export class GlobalService {
 
   windowWidth = window.innerWidth;
+  user$: Observable<UserState>
   user: any = {}
 
-  constructor(private cookieService: CookieService) {
+  constructor(private cookieService: CookieService, private store: Store<{ user: UserState }>) {
+    this.user$ = this.store.select('user')
     window.onresize = (e) => {
       this.windowWidth = window.innerWidth;
     };
@@ -33,7 +38,7 @@ export class GlobalService {
     this.cookieService.set(name, value, expireDays)
   }
 
-  decodeToken(token: string) {
+  decodeToken(token: string): User {
     return jwtDecode(token)
   }
 }

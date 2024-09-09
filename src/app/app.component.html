@@ -11,9 +11,9 @@
     <mat-drawer-container>
       <mat-drawer #drawer [opened]="!global.isMobile()" [mode]="global.isMobile() ? 'over': 'side'" class="sideNav">
         <ul class="navList">
-          <li class="sd-navItem userProfile" routerLink="/dashboard" *ngIf="global.user?.user">
+          <li class="sd-navItem userProfile" routerLink="/dashboard" *ngIf="user?.user">
             <img src="../assets/menu-image/user.svg" class="profileImg" alt="User">
-            <span class="userName">{{global.user?.user}}</span>
+            <span class="userName">{{user?.user}}</span>
           </li>
           <li class="sd-navItem" routerLink="/home" routerLinkActive="active">
             <img src="../assets/menu-image/home.svg" class="mr-2" alt="Home">
@@ -27,11 +27,11 @@
             <img src="../assets/menu-image/cart.svg" class="mr-2" alt="Home">
             <span>Cart</span>
           </li>
-          <li class="sd-navItem" (click)="logout()" *ngIf="global.user?.user">
+          <li class="sd-navItem" (click)="logout()" *ngIf="user?.user">
             <img src="../assets/menu-image/logout.svg" class="mr-2" alt="Home">
             <span>Logout</span>
           </li>
-          <li class="sd-navItem" routerLink="/login" routerLinkActive="active" *ngIf="!global.user?.user">
+          <li class="sd-navItem" routerLink="/login" routerLinkActive="active" *ngIf="!user?.user">
             <img src="../assets/menu-image/login.svg" class="mr-2" alt="Home">
             <span>Login</span>
           </li>
