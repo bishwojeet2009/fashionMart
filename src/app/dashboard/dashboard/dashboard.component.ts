@@ -1,11 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
-import { User, UserInfo } from 'src/app/interface/user';
+import { UserInfo } from 'src/app/interface/user';
 import { ApiService } from 'src/app/service/api.service';
 import { GlobalService } from 'src/app/service/global.service';
-import { addUserInfoAction, deteleUserAction, deteleUserInfoAction } from 'src/app/store/user/user.action';
+import { deteleUserAction, deteleUserInfoAction } from 'src/app/store/user/user.action';
 
 @Component({
   selector: 'app-dashboard',
@@ -18,9 +17,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
   loadingUser: Boolean = false;
   userInfoSubscription: Subscription | undefined;
 
-  // user: User | null = null
 
-  constructor(public global: GlobalService, private api: ApiService, private router: Router, private store: Store<{ user: User, userInfo: UserInfo }>) {
+  constructor(public global: GlobalService, private api: ApiService, private router: Router) {
     this.userInfoSubscription = this.global.userInfo$.subscribe(res => {
       this.userInfo = res.userInfo
     })
@@ -32,9 +30,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   deleteUser() {
     this.api.deleteUser(this.userInfo ? this.userInfo.id : 0).subscribe(res => {
-      this.store.dispatch(deteleUserAction())
-      this.store.dispatch(deteleUserInfoAction())
-      // this.global.user = {};
+      this.global.store.dispatch(deteleUserAction())
+      this.global.store.dispatch(deteleUserInfoAction())
       this.global.deleteCookie('userToken');
       this.router.navigate(['/home'])
     },

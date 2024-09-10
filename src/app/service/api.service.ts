@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { CardItem, ProductItem, UserInfo } from '../interface/product';
+import { CardItem, ProductItem } from '../interface/product';
+import { UserInfo } from '../interface/user';
 
 @Injectable({
   providedIn: 'root'
@@ -129,7 +130,6 @@ export class ApiService {
   }
 
   public getCartItem(id: number) {
-    console.log("Id", id)
     const headers = new HttpHeaders().set('Content-Type', 'application/json')
     return this.http.get<CardItem[]>(this.apiBase + `/carts/user/${id}`, {
       headers: headers

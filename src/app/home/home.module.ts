@@ -5,6 +5,7 @@ import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home/home.component';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { LazyLoadImageModule } from "ng-lazyload-image";
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     CommonModule,
     HomeRoutingModule,
     CarouselModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    LazyLoadImageModule,
   ]
 })
 export class HomeModule { }

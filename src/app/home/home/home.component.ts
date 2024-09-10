@@ -1,27 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { ApiService } from 'src/app/service/api.service';
 import { ProductItem } from 'src/app/interface/product';
+import { addProductListAction } from 'src/app/store/product/product.action';
+import { GlobalService } from 'src/app/service/global.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['../../../sd-scss/globalCss.scss', './home.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
 
   categoryType = ''
+  productList: ProductItem[] = [];
 
-  productList: ProductItem[] = []
+  productSubscription: Subscription | undefined
 
 
 
   customOptions: OwlOptions = {
     loop: true,
-    // margin: 10,
     nav: true,
-    dots: false,  // Show dots (pagination)
-    // center: true,
+    dots: false,
     navText: [
       ' <img src="../../../assets/home-image/prev.png" alt="Previous">', // Custom left arrow
       '<img src="../../../assets/home-image/next.png" alt="Next">'   // Custom right arrow
@@ -39,7 +41,10 @@ export class HomeComponent implements OnInit {
     }
   };
 
-  constructor(private api: ApiService) {
+  constructor(private api: ApiService, public global: GlobalService) {
+    this.productSubscription = this.global.productList$.subscribe(res => {
+      this.productList = res.productList
+    })
     this.getProductList()
   }
 
@@ -54,11 +59,16 @@ export class HomeComponent implements OnInit {
 
   getProductList() {
     this.api.getAllProduct(this.categoryType).subscribe((res) => {
+      this.global.store.dispatch(addProductListAction({ productList: res }))
       this.productList = res;
     }, (err) => {
       console.warn(err)
     })
 
+  }
+
+  ngOnDestroy(): void {
+    this.productSubscription ? this.productSubscription.unsubscribe() : ''
   }
 
 

@@ -4,9 +4,8 @@ import { ApiService } from 'src/app/service/api.service';
 import { map } from 'rxjs/operators';
 import { GlobalService } from 'src/app/service/global.service';
 import { Router } from '@angular/router';
-import { Observable, Subscribable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { User } from 'src/app/interface/user';
-import { Store } from '@ngrx/store';
 import { addUserAction, addUserInfoAction } from 'src/app/store/user/user.action';
 
 @Component({
@@ -43,7 +42,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     password: new FormControl('', Validators.required)
   })
 
-  constructor(private fb: FormBuilder, private api: ApiService, private global: GlobalService, private router: Router, private store: Store<{ user: User }>) {
+  constructor(private fb: FormBuilder, private api: ApiService, private global: GlobalService, private router: Router) {
     this.userSubscription = this.global.user$.subscribe(res => {
       this.user = res.user
     })
@@ -99,8 +98,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         }
         ))
         .subscribe(res => {
-          this.global.user = res
-          this.store.dispatch(addUserAction({ user: res }))
+          this.global.store.dispatch(addUserAction({ user: res }))
           this.getUserInfo(res.sub)
           this.submittingForm = false;
           this.router.navigate(['/home'])
@@ -117,7 +115,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   getUserInfo(id: number) {
     this.api.getUser(id).subscribe(res => {
-      this.store.dispatch(addUserInfoAction({ userInfo: res }))
+      this.global.store.dispatch(addUserInfoAction({ userInfo: res }))
     }, (err) => {
       console.warn(err)
     })
@@ -141,7 +139,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.registrationForm.value.street,
         this.registrationForm.value.zipcode,
         this.registrationForm.value.number,
-        this.global.user.sub
+        this.user ? this.user.sub : 0
       ).subscribe(res => {
         this.submittingForm = false;
         this.updateUser = false;

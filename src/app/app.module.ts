@@ -11,6 +11,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthInterceptor } from './auth.interceptor';
 import { StoreModule } from '@ngrx/store';
 import { userInfoReducer, userReducer } from './store/user/user.reducer';
+import { productListReducer } from './store/product/product.reducer';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { userInfoReducer, userReducer } from './store/user/user.reducer';
     ReactiveFormsModule,
     StoreModule.forRoot({
       user: userReducer,
-      userInfo: userInfoReducer
+      userInfo: userInfoReducer,
+      productList: productListReducer
     })
   ],
   providers: [

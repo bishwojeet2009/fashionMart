@@ -4,6 +4,7 @@ import { jwtDecode } from 'jwt-decode';
 import { Observable } from 'rxjs';
 import { User, UserInfoState, UserState } from '../interface/user';
 import { Store } from '@ngrx/store';
+import { ProductListState } from '../interface/product';
 
 
 @Injectable({
@@ -14,11 +15,12 @@ export class GlobalService {
   windowWidth = window.innerWidth;
   user$: Observable<UserState>
   userInfo$: Observable<UserInfoState>
-  user: any = {}
+  productList$: Observable<ProductListState>
 
-  constructor(private cookieService: CookieService, private store: Store<{ user: UserState, userInfo: UserInfoState }>) {
+  constructor(private cookieService: CookieService, public store: Store<{ user: UserState, userInfo: UserInfoState, productList: ProductListState }>) {
     this.user$ = this.store.select('user');
-    this.userInfo$ = this.store.select('userInfo')
+    this.userInfo$ = this.store.select('userInfo');
+    this.productList$ = this.store.select('productList')
     window.onresize = (e) => {
       this.windowWidth = window.innerWidth;
     };
