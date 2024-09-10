@@ -23,7 +23,7 @@ Run the Application: To start the application, use the ng serve.
 
 ## Usage Instructions:
 
-To test the feature, you can either set up the project locally or use the link provided in the email.
+To test the feature, you can either set up the project locally or use the link https://bishwojeet2009.github.io/fashionMart/home.
 
 1. Access the Application: When you open the URL, you'll see the Home page, which displays various products.
 2. Navigation Restrictions: Attempting to navigate to the Dashboard or Cart will redirect you to the Login page, as these pages require authentication.
