@@ -2,6 +2,10 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.18.
 
+## Note:
+
+This project uses the FakeStoreAPI (https://fakestoreapi.com/docs), which provides a mock API to test the project's functionality. However, it does not allow modifications to its database. Changes made for testing will not be persisted in the database.
+
 ## Project Dependencies:
 
 The project includes the following key dependencies as specified in the package.json:
