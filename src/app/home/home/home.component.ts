@@ -25,8 +25,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     nav: true,
     dots: false,
     navText: [
-      ' <img src="../../../assets/home-image/prev.png" alt="Previous">', // Custom left arrow
-      '<img src="../../../assets/home-image/next.png" alt="Next">'   // Custom right arrow
+      ' <img src="assets/home-image/prev.png" alt="Previous">', // Custom left arrow
+      '<img src="assets/home-image/next.png" alt="Next">'   // Custom right arrow
     ],
     responsive: {
       0: {
