@@ -6,6 +6,13 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 This project uses the FakeStoreAPI (https://fakestoreapi.com/docs), which provides a mock API to test the project's functionality. However, it does not allow modifications to its database. Changes made for testing will not be persisted in the database.
 
+| SN  | ID        | Password     |
+| --- | --------- | ------------ |
+| 1   | johnd     | 8rmF$        |
+| 2   | mor\*2314 | 83r5^\*      |
+| 3   | hopkins   | William56$hj |
+| 4   | donero    | ewedon       |
+
 ## Project Dependencies:
 
 The project includes the following key dependencies as specified in the package.json:
