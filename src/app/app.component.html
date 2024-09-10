@@ -1,10 +1,10 @@
 <div class="mainSection">
   <div class="px-3 py-3 d-flex justify-content-between align-items-center">
     <a routerLink="/home">
-      <img src="../assets/image/logo.png" alt="Logo" class="logo">
+      <img src="assets/image/logo.png" alt="Logo" class="logo">
     </a>
     <button class="p-0 toggleBtn" *ngIf="global.isMobile()" (click)="drawer.toggle()">
-      <img src="../assets/image/toggle-icon.png" alt="Toggle Icon" class="toggleImg">
+      <img src="assets/image/toggle-icon.png" alt="Toggle Icon" class="toggleImg">
     </button>
   </div>
   <div>
@@ -12,27 +12,27 @@
       <mat-drawer #drawer [opened]="!global.isMobile()" [mode]="global.isMobile() ? 'over': 'side'" class="sideNav">
         <ul class="navList">
           <li class="sd-navItem userProfile" routerLink="/dashboard" *ngIf="user?.user">
-            <img src="../assets/menu-image/user.svg" class="profileImg" alt="User">
+            <img src="assets/menu-image/user.svg" class="profileImg" alt="User">
             <span class="userName">{{user?.user}}</span>
           </li>
           <li class="sd-navItem" routerLink="/home" routerLinkActive="active">
-            <img src="../assets/menu-image/home.svg" class="mr-2" alt="Home">
+            <img src="assets/menu-image/home.svg" class="mr-2" alt="Home">
             <span>Home</span>
           </li>
           <li class="sd-navItem" routerLink="/dashboard" routerLinkActive="active">
-            <img src="../assets/menu-image/dashboard.svg" class="mr-2" alt="Dashboard">
+            <img src="assets/menu-image/dashboard.svg" class="mr-2" alt="Dashboard">
             <span>Dashboard</span>
           </li>
           <li class="sd-navItem" routerLink="/cart" routerLinkActive="active">
-            <img src="../assets/menu-image/cart.svg" class="mr-2" alt="Home">
+            <img src="assets/menu-image/cart.svg" class="mr-2" alt="Home">
             <span>Cart</span>
           </li>
           <li class="sd-navItem" (click)="logout()" *ngIf="user?.user">
-            <img src="../assets/menu-image/logout.svg" class="mr-2" alt="Home">
+            <img src="assets/menu-image/logout.svg" class="mr-2" alt="Home">
             <span>Logout</span>
           </li>
           <li class="sd-navItem" routerLink="/login" routerLinkActive="active" *ngIf="!user?.user">
-            <img src="../assets/menu-image/login.svg" class="mr-2" alt="Home">
+            <img src="assets/menu-image/login.svg" class="mr-2" alt="Home">
             <span>Login</span>
           </li>
         </ul>
