@@ -1,35 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
-
-// html,
-// body {
-//     height: 100%;
-// }
-
-// body {
-//     margin: 0;
-//     font-family: Roboto, "Helvetica Neue", sans-serif;
-// }
-
-
-
-/* You can add global styles to this file, and also import other style files */
 $main-bg-color: #F9F9F9;
-$gray-bg-color: #F3F3F3;
 $white-smoke: #FEFDFD;
 $white: #FFFFFF;
 $blue: #4A68F7;
 $light-blue: #E6EAFD;
-$dark-blue: #0037FF;
-$yellow: #FDD200;
-$green: #27AE60;
 $red: #Eb5757;
 $black: #222222;
 $dark-gray: #222222BF;
-// $dark-gray: #828282;
 $gray: #2222228C;
-// $gray: #B3B3B3;
 $light-gray: #2222224D;
-// $light-gray: #D9D9D9;
 $gains-boro: rgba(216, 218, 225, 0.7);
 
 
@@ -130,8 +109,7 @@ label,
     color: $gray;
 }
 
-button,
-.secondaryBtn {
+button {
     font-size: 20px;
     font-weight: 500;
     line-height: 26px;
@@ -164,29 +142,6 @@ button,
     }
 }
 
-.secondaryBtn {
-
-    background: $light-blue;
-
-    &:hover {
-        box-shadow: none;
-        background-color: $blue;
-        color: $white-smoke;
-    }
-
-    &:active {
-        box-shadow: none !important;
-    }
-
-    &:disabled {
-        background-color: $gray-bg-color;
-        box-shadow: none;
-
-        &:hover {
-            color: $gray;
-        }
-    }
-}
 
 .ternary {
     font-size: 16px;
@@ -228,19 +183,6 @@ button,
     background-image: none;
 }
 
-.singleLinePara {
-    line-height: 26px;
-}
-
-.singleLineSubPara {
-    line-height: 20.8px;
-}
-
-.staticHeading {
-    font-family: Bebas Neue;
-    font-weight: 400;
-}
-
 .sd-navItem {
     font-size: 16px;
     font-weight: 400;
@@ -266,12 +208,6 @@ button,
     color: $gray;
 }
 
-// .labelText {
-//     font-size: 14px;
-//     font-weight: 300;
-//     line-height: 18.2px;
-//     color: $dark-gray;
-// }
 
 
 
@@ -320,8 +256,7 @@ button,
         line-height: 15.6px;
     }
 
-    button,
-    .secondaryBtn {
+    button {
         padding: 14px 28px;
         font-size: 18px;
         line-height: 18px;
@@ -336,14 +271,6 @@ button,
         font-size: 12px;
     }
 
-    .singleLinePara {
-        line-height: 23.4px;
-    }
-
-    .singleLineSubPara {
-        line-height: 18.2px;
-    }
-
     .sd-navItem {
         font-size: 14px;
         line-height: 14px;
@@ -355,10 +282,7 @@ button,
         line-height: 18.2px;
     }
 
-    // .labelText {
-    //     font-size: 12px;
-    //     line-height: 15.6px;
-    // }
+
 
 }
 
@@ -406,8 +330,7 @@ button,
         line-height: 13px;
     }
 
-    button,
-    .secondaryBtn {
+    button {
         font-size: 16px;
         line-height: 16px;
         padding: 12px 24px;
@@ -422,14 +345,6 @@ button,
         font-size: 10px;
     }
 
-    .singleLinePara {
-        line-height: 20.8px;
-    }
-
-    .singleLineSubPara {
-        line-height: 15.6px;
-    }
-
     .sd-navItem {
         font-size: 12px;
         line-height: 12px;
@@ -440,11 +355,6 @@ button,
         font-size: 12px;
         line-height: 15.6px;
     }
-
-    // .labelText {
-    //     font-size: 10px;
-    //     line-height: 13px;
-    // }
 
 
 }
